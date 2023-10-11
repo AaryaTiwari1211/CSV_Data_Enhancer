@@ -22,9 +22,9 @@ load_dotenv()
 openai.api_key = os.getenv("API_KEY")
 
 column_to_enhance = ['Overview','Eligibility Overview','Course Ranking','Placement','University Ranking','Accommodation','Course Description']
-column_to_enhance2 = ['Overview']
-csv_file_path = 'University2.csv'
+csv_file_path = 'University4.csv'
 df = pd.read_csv(csv_file_path)
+
 
 def num_tokens_from_string(string: str, model_name: str) -> int:
     encoding = tiktoken.encoding_for_model(model_name)
@@ -57,6 +57,8 @@ def enhance_text(text):
         i += 1
         return "No text provided"
 
+
+
 def enhance_and_track_changes(dataframe, column_names):
     for column in column_names:
         dataframe[column] = dataframe[column].apply(enhance_text)
@@ -64,8 +66,9 @@ def enhance_and_track_changes(dataframe, column_names):
     return dataframe
 
 
+
 df = enhance_and_track_changes(df, column_to_enhance)
-enhanced_csv_path = 'Enhanced_University2.csv'
+enhanced_csv_path = 'Enhanced_University4.csv'
 df.to_csv(enhanced_csv_path, index=False)
 
 print(f"Enhanced data with original values saved to {enhanced_csv_path}")
